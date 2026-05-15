@@ -8,6 +8,7 @@
 	import Navbar from '$lib/components/layout/Navbar.svelte';
 	import Footer from '$lib/components/layout/Footer.svelte';
 	import { terminal } from '$lib/stores/terminal';
+	import Terminal from '$lib/components/terminal/Terminal.svelte';
 
 	let { children } = $props();
 
@@ -40,5 +41,4 @@
 {/key}
 
 <Footer />
-
-<!-- Terminal overlay — mounted here so it's always available; built in Phase 7 -->
+<Terminal />
