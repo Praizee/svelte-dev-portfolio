@@ -17,7 +17,12 @@ const config = {
 		}),
 		prerender: {
 			entries: ['*'],
-			handleMissingId: 'warn'
+			handleMissingId: 'warn',
+			handleHttpError: ({ path, message }) => {
+				// Allow missing static assets (resume PDF, project images) during dev
+				if (path.endsWith('.pdf') || path.startsWith('/images/')) return;
+				throw new Error(message);
+			}
 		}
 	}
 };

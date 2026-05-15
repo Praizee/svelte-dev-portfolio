@@ -1,9 +1,15 @@
+<script lang="ts">
+	import Hero from '$lib/components/hero/Hero.svelte';
+</script>
+
 <svelte:head>
 	<title>Stephen Adeniji — Frontend Engineer</title>
+	<meta
+		name="description"
+		content="Stephen Adeniji — Frontend Engineer building fast, polished, and accessible web experiences."
+	/>
 </svelte:head>
 
-<main>
-	<p style="color: var(--color-text); padding: 2rem; font-family: var(--font-family-mono);">
-		Portfolio scaffolding complete ✓
-	</p>
-</main>
+<Hero />
+
+<!-- Projects, Skills, Contact sections added in subsequent phases -->
