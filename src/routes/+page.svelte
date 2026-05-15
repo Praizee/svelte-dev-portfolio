@@ -2,6 +2,8 @@
 	import Hero from '$lib/components/hero/Hero.svelte';
 	import SectionHeader from '$lib/components/ui/SectionHeader.svelte';
 	import ProjectGrid from '$lib/components/projects/ProjectGrid.svelte';
+	import SkillsSection from '$lib/components/skills/SkillsSection.svelte';
+	import ContactSection from '$lib/components/contact/ContactSection.svelte';
 	import { getFeaturedProjects } from '$lib/data/projects';
 
 	const featured = getFeaturedProjects();
@@ -27,7 +29,7 @@
 		/>
 		<a
 			href="/projects"
-			class="shrink-0 inline-flex items-center gap-1.5 text-sm font-medium transition-colors duration-150 hover:text-[var(--color-accent)]"
+			class="shrink-0 inline-flex items-center gap-1.5 text-sm font-medium transition-colors duration-150 hover:text-accent"
 			style="color: var(--color-text-muted);"
 		>
 			View all projects
@@ -40,4 +42,6 @@
 	<ProjectGrid projects={featured} />
 </section>
 
-<!-- Skills + Contact sections added in Phase 8 -->
+<SkillsSection />
+
+<ContactSection />
