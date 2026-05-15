@@ -2,7 +2,7 @@
 	import type { PageData } from './$types';
 	import { getRelatedProjects } from '$lib/data/projects';
 	import Badge from '$lib/components/ui/Badge.svelte';
-	import ImageLazy from '$lib/components/ui/ImageLazy.svelte';
+	import ImageCarousel from '$lib/components/ui/ImageCarousel.svelte';
 	import SectionHeader from '$lib/components/ui/SectionHeader.svelte';
 	import ProjectCard from '$lib/components/projects/ProjectCard.svelte';
 
@@ -117,33 +117,10 @@
 		<!-- Left: image + description -->
 		<div class="lg:col-span-2 flex flex-col gap-10">
 
-			<!-- Hero image -->
+			<!-- Image carousel / placeholder -->
 			{#if project.images.length > 0}
-				<div
-					class="rounded-2xl overflow-hidden border shadow-lg"
-					style="border-color: var(--color-border); box-shadow: 0 24px 64px -12px color-mix(in srgb, {project.color} 20%, transparent);"
-				>
-					<ImageLazy
-						src={project.images[0].src}
-						alt={project.images[0].alt}
-						width={project.images[0].width}
-						height={project.images[0].height}
-						priority={true}
-					/>
-				</div>
-
-				<!-- Additional screenshots -->
-				{#if project.images.length > 1}
-					<div class="grid grid-cols-2 gap-4">
-						{#each project.images.slice(1) as img}
-							<div class="rounded-xl overflow-hidden border" style="border-color: var(--color-border);">
-								<ImageLazy src={img.src} alt={img.alt} width={img.width} height={img.height} />
-							</div>
-						{/each}
-					</div>
-				{/if}
+				<ImageCarousel images={project.images} accentColor={project.color} priority={true} />
 			{:else}
-				<!-- Colour-coded placeholder -->
 				<div
 					class="rounded-2xl flex items-center justify-center border"
 					style="aspect-ratio: 16/9; border-color: var(--color-border); background: linear-gradient(135deg, color-mix(in srgb, {project.color} 14%, var(--color-surface-2)), color-mix(in srgb, {project.color} 5%, var(--color-surface-2)));"

@@ -37,7 +37,7 @@
 
 /* ── Tailwind v4 theme extension via CSS ── */
 @theme {
-	--font-family-sans: 'Inter', system-ui, sans-serif;
+	--font-family-sans: 'Space Grotesk', system-ui, sans-serif;
 	--font-family-mono: 'JetBrains Mono', 'Fira Code', monospace;
 
 	--color-bg: var(--color-bg);

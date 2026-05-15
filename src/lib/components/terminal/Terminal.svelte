@@ -63,8 +63,9 @@
 		{ type: 'output', text: '  Role    Frontend Engineer' },
 		{ type: 'output', text: '  Exp     2+ years' },
 		{ type: 'output', text: '  Focus   React · Next.js · SvelteKit · TypeScript' },
-		{ type: 'output', text: '  Email   praiseadeniji2017@gmail.com' },
-		{ type: 'output', text: '  GitHub  github.com/stephenadeniji' },
+		{ type: 'output', text: '  Email   adeolaastephen@gmail.com' },
+		{ type: 'output', text: '  GitHub  github.com/Praizee' },
+		{ type: 'output', text: '  X       @steevenadeniji' },
 		{ type: 'output', text: '' }
 	];
 
@@ -86,9 +87,10 @@
 
 	const CONTACT_LINES: TerminalLine[] = [
 		{ type: 'output', text: '' },
-		{ type: 'output', text: '  Email    praiseadeniji2017@gmail.com' },
+		{ type: 'output', text: '  Email    adeolaastephen@gmail.com' },
 		{ type: 'output', text: '  LinkedIn linkedin.com/in/stephen-adeniji' },
-		{ type: 'output', text: '  GitHub   github.com/stephenadeniji' },
+		{ type: 'output', text: '  GitHub   github.com/Praizee' },
+		{ type: 'output', text: '  X        @steevenadeniji' },
 		{ type: 'output', text: '' },
 		{ type: 'output', text: '  → Scrolling to contact section…' }
 	];

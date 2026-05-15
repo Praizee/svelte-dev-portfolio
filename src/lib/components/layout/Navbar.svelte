@@ -65,7 +65,7 @@
 			>
 				SA
 			</span>
-			<span class="hidden sm:block" style="color: var(--color-text);">stephena</span>
+			<span class="hidden sm:block" style="color: var(--color-text);">stephen</span>
 			<span class="hidden sm:block" style="color: var(--color-accent);">.dev</span>
 		</a>
 

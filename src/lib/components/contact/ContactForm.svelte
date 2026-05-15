@@ -90,7 +90,7 @@
 		name="contact"
 		method="POST"
 		data-netlify="true"
-		netlify-honeypot="bot-field"
+		data-netlify-honeypot="bot-field"
 		onsubmit={handleSubmit}
 		novalidate
 		class="flex flex-col gap-5"
@@ -227,7 +227,7 @@
 		<!-- Error state -->
 		{#if status === 'error'}
 			<p class="text-sm rounded-xl px-4 py-3 border" style="color: #EF4444; border-color: #EF4444; background: color-mix(in srgb, #EF4444 8%, var(--color-surface));" role="alert">
-				Something went wrong. Try emailing me directly at praiseadeniji2017@gmail.com.
+				Something went wrong. Try emailing me directly at adeolaastephen@gmail.com.
 			</p>
 		{/if}
 

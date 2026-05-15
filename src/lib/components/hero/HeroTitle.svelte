@@ -13,23 +13,24 @@
 
 	let titleEl = $state<HTMLHeadingElement | undefined>(undefined);
 
-	onMount(async () => {
-		// GSAP letter reveal
+	onMount(() => {
+		// GSAP letter reveal — fire and forget, no cleanup needed
 		const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-		if (!prefersReduced) {
-			const { gsap } = await import('gsap');
-			const chars = titleEl.querySelectorAll('[data-char]');
-			gsap.from(chars, {
-				y: 80,
-				opacity: 0,
-				duration: 0.7,
-				stagger: 0.035,
-				ease: 'back.out(1.4)',
-				delay: 0.15
+		if (!prefersReduced && titleEl) {
+			import('gsap').then(({ gsap }) => {
+				const charEls = titleEl!.querySelectorAll('[data-char]');
+				gsap.from(charEls, {
+					y: 80,
+					opacity: 0,
+					duration: 0.7,
+					stagger: 0.035,
+					ease: 'back.out(1.4)',
+					delay: 0.15
+				});
 			});
 		}
 
-		// Typewriter
+		// Typewriter — returns cleanup
 		let timeout: ReturnType<typeof setTimeout>;
 
 		function tick() {

@@ -17,7 +17,7 @@
 	const hasImage = $derived(project.images.length > 0);
 </script>
 
-<article class="group relative flex flex-col rounded-2xl overflow-hidden border transition-all duration-300 hover:border-[var(--color-accent)] hover:-translate-y-1 hover:shadow-xl"
+<article class="group relative flex flex-col h-full rounded-2xl overflow-hidden border transition-all duration-300 hover:border-accent hover:-translate-y-1 hover:shadow-xl"
 	style="
 		background: var(--color-surface);
 		border-color: var(--color-border);

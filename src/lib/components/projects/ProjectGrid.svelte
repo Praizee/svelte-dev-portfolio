@@ -22,7 +22,7 @@
 	>
 		{#each projects as project, i}
 			<div
-				class="project-item"
+				class="project-item flex flex-col"
 				style="animation: fadeSlideUp 0.45s ease both; animation-delay: {i * 80}ms;"
 			>
 				<ProjectCard {project} index={i} />

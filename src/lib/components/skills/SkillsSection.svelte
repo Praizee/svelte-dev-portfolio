@@ -1,64 +1,24 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { animateBar, staggerReveal, prefersReducedMotion } from '$lib/utils/animations';
+	import { staggerReveal, prefersReducedMotion } from '$lib/utils/animations';
 
-	type Skill = { name: string; level: number; icon: string };
-	type SkillGroup = { label: string; skills: Skill[] };
-
-	const groups: SkillGroup[] = [
+	const groups = [
 		{
 			label: 'Frontend',
-			skills: [
-				{ name: 'React / Next.js', level: 90, icon: '⚛' },
-				{ name: 'SvelteKit', level: 85, icon: '🔥' },
-				{ name: 'TypeScript', level: 88, icon: '𝙏' },
-				{ name: 'Tailwind CSS', level: 92, icon: '💨' },
-				{ name: 'Framer Motion', level: 80, icon: '✦' },
-				{ name: 'GSAP', level: 75, icon: '🎯' }
-			]
+			skills: ['React', 'Next.js', 'SvelteKit', 'TypeScript', 'Tailwind CSS', 'Framer Motion', 'GSAP']
 		},
 		{
 			label: 'Backend & Data',
-			skills: [
-				{ name: 'Node.js', level: 72, icon: '🟢' },
-				{ name: 'Prisma', level: 70, icon: '▲' },
-				{ name: 'PostgreSQL', level: 65, icon: '🐘' },
-				{ name: 'Sanity CMS', level: 78, icon: '📦' }
-			]
+			skills: ['Supabase', 'Firebase', 'Sanity CMS']
+			// 'Prisma'
 		},
 		{
 			label: 'Tools',
-			skills: [
-				{ name: 'Git / GitHub', level: 90, icon: '🐙' },
-				{ name: 'Figma', level: 75, icon: '🎨' },
-				{ name: 'Vercel / Netlify', level: 85, icon: '🚀' },
-				{ name: 'VS Code', level: 95, icon: '💙' }
-			]
+			skills: ['Git', 'GitHub', 'Figma', 'Vercel', 'Netlify', 'VS Code']
 		}
 	];
 
-	let activeGroup = $state(0);
 	let sectionEl = $state<HTMLElement | undefined>(undefined);
-	// Map of "groupIndex-skillIndex" -> bar element
-	let barEls = $state<Record<string, HTMLDivElement>>({});
-
-	function setBar(key: string, el: HTMLDivElement | null) {
-		if (el) barEls[key] = el;
-	}
-
-	// Re-animate bars whenever active tab changes
-	$effect(() => {
-		const group = groups[activeGroup];
-		if (!group || prefersReducedMotion()) return;
-
-		// Defer so DOM is updated first
-		setTimeout(() => {
-			group.skills.forEach((skill, j) => {
-				const bar = barEls[`${activeGroup}-${j}`];
-				if (bar) animateBar(bar, `${skill.level}%`, j * 0.06);
-			});
-		}, 0);
-	});
 
 	onMount(() => {
 		if (!sectionEl || prefersReducedMotion()) return;
@@ -87,84 +47,24 @@
 			</p>
 		</div>
 
-		<!-- Group tabs -->
-		<div data-reveal role="tablist" aria-label="Skill categories" class="flex gap-2 flex-wrap">
-			{#each groups as group, i}
-				<button
-					role="tab"
-					aria-selected={activeGroup === i}
-					aria-controls="skill-panel-{i}"
-					id="skill-tab-{i}"
-					onclick={() => (activeGroup = i)}
-					class="px-4 py-2 rounded-lg text-sm font-medium border transition-all duration-200"
-					style={activeGroup === i
-						? 'background: var(--color-accent); border-color: var(--color-accent); color: #fff;'
-						: 'background: var(--color-surface); border-color: var(--color-border); color: var(--color-text-muted);'}
-				>
-					{group.label}
-				</button>
-			{/each}
-		</div>
-
-		<!-- Skill panels -->
-		{#each groups as group, i}
-			<div
-				role="tabpanel"
-				id="skill-panel-{i}"
-				aria-labelledby="skill-tab-{i}"
-				hidden={activeGroup !== i}
-				class="grid grid-cols-1 sm:grid-cols-2 gap-4"
-			>
-				{#each group.skills as skill, j}
-					<div
-						data-reveal
-						class="rounded-xl border p-4 flex flex-col gap-3 transition-all duration-300 hover:border-[var(--color-accent)]"
-						style="background: var(--color-surface); border-color: var(--color-border);"
-					>
-						<div class="flex items-center justify-between gap-3">
-							<div class="flex items-center gap-2.5">
-								<span
-									class="w-8 h-8 rounded-lg flex items-center justify-center text-base shrink-0"
-									style="background: var(--color-surface-2);"
-									aria-hidden="true"
-								>{skill.icon}</span>
-								<span class="text-sm font-semibold" style="color: var(--color-text);">{skill.name}</span>
-							</div>
-							<span class="font-mono text-xs shrink-0" style="color: var(--color-text-muted);">
-								{skill.level}%
+		<!-- Skill groups -->
+		<div data-reveal class="flex flex-col gap-8">
+			{#each groups as group}
+				<div class="flex flex-col gap-3">
+					<p class="font-mono text-xs tracking-widest uppercase" style="color: var(--color-text-muted);">
+						{group.label}
+					</p>
+					<div class="flex flex-wrap gap-2">
+						{#each group.skills as skill}
+							<span
+								class="px-3 py-1.5 rounded-full font-mono text-xs border transition-all duration-200 hover:border-accent hover:text-accent hover:bg-[color-mix(in_srgb,var(--color-accent)_6%,transparent)] cursor-default select-none"
+								style="background: var(--color-surface); border-color: var(--color-border); color: var(--color-text-muted);"
+							>
+								{skill}
 							</span>
-						</div>
-
-						<!-- Bar track -->
-						<div
-							class="h-1 rounded-full overflow-hidden"
-							style="background: var(--color-surface-2);"
-							role="progressbar"
-							aria-valuenow={skill.level}
-							aria-valuemin={0}
-							aria-valuemax={100}
-							aria-label="{skill.name} proficiency {skill.level}%"
-						>
-							<div
-								bind:this={barEls[`${i}-${j}`]}
-								class="h-full rounded-full"
-								style="width: 0%; background: linear-gradient(90deg, var(--color-accent), var(--color-accent-2));"
-							></div>
-						</div>
+						{/each}
 					</div>
-				{/each}
-			</div>
-		{/each}
-
-		<!-- Badge cloud -->
-		<div data-reveal class="flex flex-wrap gap-2 pt-2">
-			{#each ['React', 'Next.js', 'SvelteKit', 'TypeScript', 'Tailwind', 'GSAP', 'Framer Motion', 'Prisma', 'PostgreSQL', 'Sanity', 'Figma', 'Vercel'] as tech}
-				<span
-					class="px-3 py-1 rounded-full font-mono text-xs border transition-all duration-200 hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] cursor-default"
-					style="background: var(--color-surface); border-color: var(--color-border); color: var(--color-text-muted);"
-				>
-					{tech}
-				</span>
+				</div>
 			{/each}
 		</div>
 	</div>
