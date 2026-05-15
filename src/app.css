@@ -1,0 +1,119 @@
+@import 'tailwindcss';
+
+/* ── Theme tokens ── */
+:root {
+	--color-bg: #f8fafc;
+	--color-surface: #ffffff;
+	--color-surface-2: #f1f5f9;
+	--color-text: #0f172a;
+	--color-text-muted: #64748b;
+	--color-accent: #6366f1;
+	--color-accent-2: #818cf8;
+	--color-border: #e2e8f0;
+	--color-terminal-bg: #0d1117;
+	--color-terminal-text: #cdd6f4;
+	--color-terminal-green: #a6e3a1;
+	--color-terminal-yellow: #f9e2af;
+	--color-terminal-red: #f38ba8;
+	--color-terminal-prompt: #89b4fa;
+}
+
+:root.dark {
+	--color-bg: #0a0a12;
+	--color-surface: #111827;
+	--color-surface-2: #1f2937;
+	--color-text: #f1f5f9;
+	--color-text-muted: #94a3b8;
+	--color-accent: #818cf8;
+	--color-accent-2: #6366f1;
+	--color-border: #1e293b;
+	--color-terminal-bg: #0d1117;
+	--color-terminal-text: #cdd6f4;
+	--color-terminal-green: #a6e3a1;
+	--color-terminal-yellow: #f9e2af;
+	--color-terminal-red: #f38ba8;
+	--color-terminal-prompt: #89b4fa;
+}
+
+/* ── Tailwind v4 theme extension via CSS ── */
+@theme {
+	--font-family-sans: 'Inter', system-ui, sans-serif;
+	--font-family-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+	--color-bg: var(--color-bg);
+	--color-surface: var(--color-surface);
+	--color-surface-2: var(--color-surface-2);
+	--color-text: var(--color-text);
+	--color-text-muted: var(--color-text-muted);
+	--color-accent: var(--color-accent);
+	--color-accent-2: var(--color-accent-2);
+	--color-border: var(--color-border);
+
+	--animate-cursor-blink: blink 1s step-end infinite;
+	--animate-float: float 6s ease-in-out infinite;
+	--animate-pulse-slow: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes blink {
+	0%, 100% { opacity: 1; }
+	50% { opacity: 0; }
+}
+
+@keyframes float {
+	0%, 100% { transform: translateY(0px); }
+	50% { transform: translateY(-12px); }
+}
+
+/* ── Globals ── */
+*, *::before, *::after {
+	box-sizing: border-box;
+}
+
+html {
+	scroll-behavior: smooth;
+}
+
+body {
+	background-color: var(--color-bg);
+	color: var(--color-text);
+	font-family: var(--font-family-sans);
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+	*, *::before, *::after {
+		animation-duration: 0.01ms !important;
+		transition-duration: 0.01ms !important;
+	}
+}
+
+/* ── Focus styles ── */
+:focus-visible {
+	outline: 2px solid var(--color-accent);
+	outline-offset: 3px;
+	border-radius: 4px;
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar {
+	width: 6px;
+}
+::-webkit-scrollbar-track {
+	background: var(--color-bg);
+}
+::-webkit-scrollbar-thumb {
+	background: var(--color-border);
+	border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+	background: var(--color-text-muted);
+}
+
+/* ── Selection ── */
+::selection {
+	background: var(--color-accent);
+	color: #fff;
+}
