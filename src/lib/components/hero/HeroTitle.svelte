@@ -77,7 +77,7 @@
 	<!-- Name with per-character reveal -->
 	<h1
 		bind:this={titleEl}
-		class="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-bold leading-none tracking-tight"
+		class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold leading-none tracking-tight"
 		style="color: var(--color-text);"
 		aria-label={name}
 	>
