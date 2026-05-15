@@ -12,6 +12,9 @@
 
 	let { children } = $props();
 
+	const siteUrl = 'https://stephen.dev';
+	const ogImage = `${siteUrl}/og-image.png`;
+
 	onMount(() => {
 		const handler = (e: KeyboardEvent) => {
 			if (e.ctrlKey && e.key === '`') {
@@ -26,6 +29,17 @@
 		return () => window.removeEventListener('keydown', handler);
 	});
 </script>
+
+<svelte:head>
+	<meta property="og:site_name" content="Stephen Adeniji" />
+	<meta property="og:type" content="website" />
+	<meta property="og:image" content={ogImage} />
+	<meta property="og:url" content="{siteUrl}{$page.url.pathname}" />
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:image" content={ogImage} />
+	<meta name="twitter:creator" content="@steevenadeniji" />
+	<link rel="canonical" href="{siteUrl}{$page.url.pathname}" />
+</svelte:head>
 
 <SkipLink />
 <Navbar />
