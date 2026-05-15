@@ -39,7 +39,7 @@ export async function revealFrom(
 		ease = 'power3.out'
 	} = options;
 
-	return gsap.from(targets, { y, x, opacity, duration, delay, stagger, ease, clearProps: 'all' });
+	return gsap.from(targets, { y, x, opacity, duration, delay, stagger, ease, clearProps: 'transform,opacity' });
 }
 
 /** Animate a progress bar width from 0 to target on scroll trigger. */
@@ -82,7 +82,7 @@ export async function staggerReveal(
 		stagger: options.stagger ?? 0.08,
 		ease: options.ease ?? 'power3.out',
 		delay: options.delay ?? 0,
-		clearProps: 'all',
+		clearProps: 'transform,opacity',
 		scrollTrigger: {
 			trigger: container,
 			start: 'top 82%',

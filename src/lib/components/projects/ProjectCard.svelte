@@ -20,7 +20,7 @@
 <article class="group relative flex flex-col h-full rounded-2xl overflow-hidden border transition-all duration-300 hover:border-accent hover:-translate-y-1 hover:shadow-xl"
 	style="
 		background: var(--color-surface);
-		border-color: var(--color-border);
+		border-color: color-mix(in srgb, var(--color-border) 50%, transparent);
 		--shadow-color: color-mix(in srgb, {project.color} 15%, transparent);
 		animation: fadeSlideUp 0.5s ease both;
 		animation-delay: {index * 80}ms;
