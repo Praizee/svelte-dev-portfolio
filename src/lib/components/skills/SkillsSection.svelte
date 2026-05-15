@@ -1,5 +1,9 @@
 <script lang="ts">
-	type SkillGroup = { label: string; skills: { name: string; level: number; icon: string }[] };
+	import { onMount } from 'svelte';
+	import { animateBar, staggerReveal, prefersReducedMotion } from '$lib/utils/animations';
+
+	type Skill = { name: string; level: number; icon: string };
+	type SkillGroup = { label: string; skills: Skill[] };
 
 	const groups: SkillGroup[] = [
 		{
@@ -34,12 +38,38 @@
 	];
 
 	let activeGroup = $state(0);
+	let sectionEl = $state<HTMLElement | undefined>(undefined);
+	// Map of "groupIndex-skillIndex" -> bar element
+	let barEls = $state<Record<string, HTMLDivElement>>({});
+
+	function setBar(key: string, el: HTMLDivElement | null) {
+		if (el) barEls[key] = el;
+	}
+
+	// Re-animate bars whenever active tab changes
+	$effect(() => {
+		const group = groups[activeGroup];
+		if (!group || prefersReducedMotion()) return;
+
+		// Defer so DOM is updated first
+		setTimeout(() => {
+			group.skills.forEach((skill, j) => {
+				const bar = barEls[`${activeGroup}-${j}`];
+				if (bar) animateBar(bar, `${skill.level}%`, j * 0.06);
+			});
+		}, 0);
+	});
+
+	onMount(() => {
+		if (!sectionEl || prefersReducedMotion()) return;
+		staggerReveal(sectionEl, '[data-reveal]', { y: 24, stagger: 0.07, duration: 0.55 });
+	});
 </script>
 
-<section id="skills" class="max-w-6xl mx-auto px-4 sm:px-6 py-24">
+<section id="skills" bind:this={sectionEl} class="max-w-6xl mx-auto px-4 sm:px-6 py-24">
 	<div class="flex flex-col gap-12">
 		<!-- Header -->
-		<div class="flex flex-col sm:flex-row sm:items-end justify-between gap-6">
+		<div data-reveal class="flex flex-col sm:flex-row sm:items-end justify-between gap-6">
 			<div class="flex flex-col gap-3">
 				<p class="font-mono text-xs font-medium tracking-widest uppercase" style="color: var(--color-accent);">
 					// skills
@@ -58,7 +88,7 @@
 		</div>
 
 		<!-- Group tabs -->
-		<div role="tablist" aria-label="Skill categories" class="flex gap-2 flex-wrap">
+		<div data-reveal role="tablist" aria-label="Skill categories" class="flex gap-2 flex-wrap">
 			{#each groups as group, i}
 				<button
 					role="tab"
@@ -87,13 +117,9 @@
 			>
 				{#each group.skills as skill, j}
 					<div
-						class="rounded-xl border p-4 flex flex-col gap-3 transition-all duration-300 hover:border-[var(--color-accent)] group"
-						style="
-							background: var(--color-surface);
-							border-color: var(--color-border);
-							animation: fadeSlideUp 0.4s ease both;
-							animation-delay: {j * 60}ms;
-						"
+						data-reveal
+						class="rounded-xl border p-4 flex flex-col gap-3 transition-all duration-300 hover:border-[var(--color-accent)]"
+						style="background: var(--color-surface); border-color: var(--color-border);"
 					>
 						<div class="flex items-center justify-between gap-3">
 							<div class="flex items-center gap-2.5">
@@ -101,9 +127,7 @@
 									class="w-8 h-8 rounded-lg flex items-center justify-center text-base shrink-0"
 									style="background: var(--color-surface-2);"
 									aria-hidden="true"
-								>
-									{skill.icon}
-								</span>
+								>{skill.icon}</span>
 								<span class="text-sm font-semibold" style="color: var(--color-text);">{skill.name}</span>
 							</div>
 							<span class="font-mono text-xs shrink-0" style="color: var(--color-text-muted);">
@@ -111,7 +135,7 @@
 							</span>
 						</div>
 
-						<!-- Progress bar -->
+						<!-- Bar track -->
 						<div
 							class="h-1 rounded-full overflow-hidden"
 							style="background: var(--color-surface-2);"
@@ -122,13 +146,9 @@
 							aria-label="{skill.name} proficiency {skill.level}%"
 						>
 							<div
-								class="h-full rounded-full skill-bar"
-								style="
-									width: {skill.level}%;
-									background: linear-gradient(90deg, var(--color-accent), var(--color-accent-2));
-									animation: growBar 0.8s ease both;
-									animation-delay: {j * 60 + 200}ms;
-								"
+								bind:this={barEls[`${i}-${j}`]}
+								class="h-full rounded-full"
+								style="width: 0%; background: linear-gradient(90deg, var(--color-accent), var(--color-accent-2));"
 							></div>
 						</div>
 					</div>
@@ -136,8 +156,8 @@
 			</div>
 		{/each}
 
-		<!-- Decorative badge row -->
-		<div class="flex flex-wrap gap-2 pt-2">
+		<!-- Badge cloud -->
+		<div data-reveal class="flex flex-wrap gap-2 pt-2">
 			{#each ['React', 'Next.js', 'SvelteKit', 'TypeScript', 'Tailwind', 'GSAP', 'Framer Motion', 'Prisma', 'PostgreSQL', 'Sanity', 'Figma', 'Vercel'] as tech}
 				<span
 					class="px-3 py-1 rounded-full font-mono text-xs border transition-all duration-200 hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] cursor-default"
@@ -149,18 +169,3 @@
 		</div>
 	</div>
 </section>
-
-<style>
-	@keyframes fadeSlideUp {
-		from { opacity: 0; transform: translateY(16px); }
-		to { opacity: 1; transform: translateY(0); }
-	}
-
-	@keyframes growBar {
-		from { width: 0; }
-	}
-
-	@media (prefers-reduced-motion: reduce) {
-		.skill-bar { animation: none !important; }
-	}
-</style>

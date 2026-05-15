@@ -1,9 +1,27 @@
 <script lang="ts">
 	import { page } from '$app/stores';
+	import { onMount } from 'svelte';
 	import ThemeToggle from './ThemeToggle.svelte';
 	import { terminal } from '$lib/stores/terminal';
 
 	let mobileOpen = $state(false);
+	let hidden = $state(false);
+	let lastY = 0;
+
+	onMount(() => {
+		const onScroll = () => {
+			const y = window.scrollY;
+			// Only hide after scrolling past 80px
+			if (y > 80) {
+				hidden = y > lastY;
+			} else {
+				hidden = false;
+			}
+			lastY = y;
+		};
+		window.addEventListener('scroll', onScroll, { passive: true });
+		return () => window.removeEventListener('scroll', onScroll);
+	});
 
 	const navLinks = [
 		{ label: 'Home', href: '/' },
@@ -23,8 +41,13 @@
 </script>
 
 <header
-	class="fixed top-0 left-0 right-0 z-50 border-b"
-	style="background: color-mix(in srgb, var(--color-bg) 85%, transparent); backdrop-filter: blur(12px); border-color: var(--color-border);"
+	class="fixed top-0 left-0 right-0 z-50 border-b transition-transform duration-300"
+	style="
+		background: color-mix(in srgb, var(--color-bg) 85%, transparent);
+		backdrop-filter: blur(12px);
+		border-color: var(--color-border);
+		transform: translateY({hidden ? '-100%' : '0'});
+	"
 >
 	<nav
 		class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between"

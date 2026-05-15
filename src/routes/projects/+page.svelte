@@ -2,6 +2,7 @@
 	import { projects } from '$lib/data/projects';
 	import type { ProjectCategory } from '$lib/data/projects';
 	import SectionHeader from '$lib/components/ui/SectionHeader.svelte';
+	import ScrollReveal from '$lib/components/ui/ScrollReveal.svelte';
 	import ProjectGrid from '$lib/components/projects/ProjectGrid.svelte';
 	import ProjectFilter from '$lib/components/projects/ProjectFilter.svelte';
 
@@ -32,7 +33,7 @@
 
 <div class="max-w-6xl mx-auto px-4 sm:px-6 py-16 sm:py-24">
 	<!-- Header -->
-	<div class="mb-12 flex flex-col gap-8">
+	<ScrollReveal class="mb-12 flex flex-col gap-8">
 		<!-- Breadcrumb -->
 		<nav aria-label="Breadcrumb">
 			<ol class="flex items-center gap-2 font-mono text-xs" style="color: var(--color-text-muted);">
@@ -49,7 +50,7 @@
 		/>
 
 		<ProjectFilter options={filterOptions} {active} onchange={(v) => (active = v)} />
-	</div>
+	</ScrollReveal>
 
 	<!-- Count -->
 	<p class="font-mono text-xs mb-6" style="color: var(--color-text-muted);">

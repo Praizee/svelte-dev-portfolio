@@ -5,13 +5,13 @@
 	const name = 'Stephen Adeniji';
 	const chars = name.split('');
 
-	const roles = ['Frontend Engineer.', 'UI Developer.', 'React & Svelte Dev.', 'Product Builder.'];
+	const roles = ['Frontend Engineer.', 'UI Developer.', 'Web & Mobile Dev.', 'Product Builder.'];
 	let roleIndex = $state(0);
 	let displayed = $state('');
 	let isDeleting = $state(false);
 	let charIndex = $state(0);
 
-	let titleEl: HTMLHeadingElement;
+	let titleEl = $state<HTMLHeadingElement | undefined>(undefined);
 
 	onMount(async () => {
 		// GSAP letter reveal

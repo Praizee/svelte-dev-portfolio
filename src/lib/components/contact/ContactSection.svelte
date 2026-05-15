@@ -1,5 +1,13 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import ContactForm from './ContactForm.svelte';
+	import { staggerReveal } from '$lib/utils/animations';
+
+	let sectionEl = $state<HTMLElement | undefined>(undefined);
+
+	onMount(() => {
+		if (sectionEl) staggerReveal(sectionEl, '[data-reveal]', { y: 28, stagger: 0.1, duration: 0.6 });
+	});
 
 	const socials = [
 		{
@@ -25,6 +33,7 @@
 
 <section
 	id="contact"
+	bind:this={sectionEl}
 	class="border-t"
 	style="border-color: var(--color-border);"
 >
@@ -32,7 +41,7 @@
 		<div class="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24">
 
 			<!-- Left: copy + socials -->
-			<div class="flex flex-col gap-8">
+			<div data-reveal class="flex flex-col gap-8">
 				<div class="flex flex-col gap-3">
 					<p class="font-mono text-xs font-medium tracking-widest uppercase" style="color: var(--color-accent);">
 						// contact
@@ -107,7 +116,7 @@
 			</div>
 
 			<!-- Right: form -->
-			<div>
+			<div data-reveal>
 				<ContactForm />
 			</div>
 		</div>
