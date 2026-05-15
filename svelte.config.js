@@ -16,7 +16,8 @@ const config = {
 			strict: true
 		}),
 		prerender: {
-			entries: ['*']
+			entries: ['*'],
+			handleMissingId: 'warn'
 		}
 	}
 };
